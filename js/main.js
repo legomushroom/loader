@@ -10,14 +10,14 @@
 
     Main.prototype.vars = function() {
       this.loader = document.getElementById('js-pie-loader');
-      this.loader1 = document.getElementById('js-pie-loader1');
-      this.loader2 = document.getElementById('js-pie-loader2');
-      this.loaderToggle = document.getElementById('js-pie-loader-toggle');
-      this.toggleStyle = this.loaderToggle.style;
+      this.loader1 = this.loader.getElementById('js-pie-loader1');
+      this.loader2 = this.loader.getElementById('js-pie-loader2');
+      this.loaderToggle = this.loader.getElementById('js-pie-loader-toggle');
       this.firstColor = this.getComutedStyle(this.loader1).stroke;
       this.secondColor = this.getComutedStyle(this.loader2).stroke;
       this.toggle = false;
       this.el = this.loader2;
+      this.delay = 3000;
       this.animate = this.bind(this.animate, this);
       return this.animate();
     };
@@ -25,24 +25,40 @@
     Main.prototype.launch = function() {
       var it;
       it = this;
+      return this.mainTween = new TWEEN.Tween({
+        p: 0
+      }).to({
+        p: 1
+      }, 2 * this.o.duration || 2 * this.delay).onUpdate(function() {
+        if (this.p === 1) {
+          return it.tweens();
+        }
+      }).onStart(function() {
+        return it.tweens();
+      }).repeat(99999999999).start();
+    };
+
+    Main.prototype.tweens = function() {
+      var it;
+      it = this;
+      this.tween2 = new TWEEN.Tween({
+        offset: -24,
+        p: 0
+      }).to({
+        offset: 0,
+        p: 1
+      }, this.o.duration || this.delay).onUpdate(function() {
+        return it.el.style['stroke-dashoffset'] = this.offset * Math.PI;
+      });
       return this.tween = new TWEEN.Tween({
         offset: 0,
         p: 0
       }).to({
         offset: 24,
         p: 1
-      }, this.o.duration || 2000).onUpdate(function() {
-        var color;
-        it.el.style['stroke-dashoffset'] = this.offset * Math.PI;
-        if (this.p === 1) {
-          it.toggle = !it.toggle;
-          it.el = it.toggle ? it.loader1 : it.loader2;
-          color = !it.toggle ? it.firstColor : it.secondColor;
-          return setTimeout((function() {
-            return it.toggleStyle.stroke = color;
-          }), 1);
-        }
-      }).repeat(9999999999).start();
+      }, this.o.duration || this.delay).onUpdate(function() {
+        return it.el.style['stroke-dashoffset'] = this.offset * Math.PI;
+      }).chain(this.tween2).start();
     };
 
     Main.prototype.stop = function() {
@@ -87,6 +103,8 @@
 
   })();
 
-  window.pieLoader = new Main;
+  window.pieLoader = Main;
+
+  new window.pieLoader;
 
 }).call(this);

@@ -1,19 +1,37 @@
 // BLOCKS
 @import '../assets/imports.styl'
 
-.loader-pie
-  rect 100px
-  transform rotate(-90deg)
-  display block
+body
+  background-color #524F62
+  padding 100px
+  text-align center
+
+.loader
+  rect 100*PX
+  text-align center
   margin 0 auto
-  margin-top 100px
-  border-radius 50%
-  &--color2, &--color1
-    fill none
-    stroke-dasharray (24px*PI)px
-    // stroke-width 24px
-    stroke-width 5px
-  &--color2
-    stroke #3EBBEE
-  &--color1
-    stroke #F9C77F
+  margin-top 20%
+  &__text
+    color #745FA4
+    font-size 20*PX
+    padding 6*PX 0 0 2*PX
+    text-transform uppercase
+    font-family Open Sans
+
+  .loader__pie
+    rect 100%
+    transform rotate(-90deg)
+    margin 0 auto
+    margin-top 20%
+    display block
+    border-radius 50%
+    &--color2, &--color1
+      fill none
+      stroke-dasharray (24px*PI)px
+      stroke-width 1px
+      stroke-width 24px
+    &--color2
+      stroke #745FA4
+    &--color1
+      stroke #58A7E2
+

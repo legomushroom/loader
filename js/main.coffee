@@ -5,30 +5,39 @@ class Main
 
   vars:->
     @loader = document.getElementById('js-pie-loader')
-    @loader1 = document.getElementById('js-pie-loader1')
-    @loader2 = document.getElementById('js-pie-loader2')
-    @loaderToggle = document.getElementById('js-pie-loader-toggle')
-    @toggleStyle = @loaderToggle.style
+    @loader1 = @loader.getElementById('js-pie-loader1')
+    @loader2 = @loader.getElementById('js-pie-loader2')
+    @loaderToggle = @loader.getElementById('js-pie-loader-toggle')
+    # @toggleStyle = @loaderToggle.style
 
     @firstColor   = @getComutedStyle(@loader1).stroke
     @secondColor  = @getComutedStyle(@loader2).stroke
     @toggle = false
     @el = @loader2
+    @delay = 3000
     @animate    = @bind @animate, @
     @animate()
 
   launch:->
     it = @
-    @tween = new TWEEN.Tween( offset: 0, p: 0 )
-      .to({ offset: 24, p: 1 }, @o.duration or 2000)
+    @mainTween = new TWEEN.Tween( p: 0 )
+      .to({ p: 1 }, 2*@o.duration or 2*@delay)
+      .onUpdate(->if @p is 1 then it.tweens())
+      .onStart(-> it.tweens())
+      .repeat(99999999999).start()
+    
+  tweens:->
+    it = @
+    @tween2 = new TWEEN.Tween( offset: -24, p: 0 )
+      .to({ offset: 0, p: 1 }, @o.duration or @delay)
       .onUpdate(->
         it.el.style['stroke-dashoffset'] = @offset*Math.PI
-        if @p is 1
-          it.toggle = !it.toggle
-          it.el = if (it.toggle) then it.loader1 else it.loader2
-          color = if (!it.toggle) then it.firstColor else it.secondColor
-          setTimeout (-> it.toggleStyle.stroke = color), 1
-      ).repeat(9999999999).start()
+      )
+    @tween = new TWEEN.Tween( offset: 0, p: 0 )
+      .to({ offset: 24, p: 1 }, @o.duration or @delay)
+      .onUpdate(->
+        it.el.style['stroke-dashoffset'] = @offset*Math.PI
+      ).chain(@tween2).start()
 
   stop:->     @tween.stop()
   destroy:->  TWEEN.remove(@tween); window.pieLoader = null
@@ -51,4 +60,5 @@ class Main
     bindArgs = Array::slice.call(arguments, 2)
     wrapper
 
-window.pieLoader = new Main
+window.pieLoader = Main
+new window.pieLoader

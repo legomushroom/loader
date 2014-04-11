@@ -8,11 +8,13 @@
   </head>
   <body>
     <section role="main" id="main">
-      <svg viewBox="0 0 32 32" id="pie-loader" class="loader-pie">
-        <circle r="12" cx="16" cy="16" id="js-pie-loader-toggle" class="loader-pie--color1"></circle>
-        <circle r="12" cx="16" cy="16" id="js-pie-loader1" class="loader-pie--color2"></circle>
-        <circle r="12" cx="16" cy="16" id="js-pie-loader2" class="loader-pie--color1"></circle>
-      </svg>
+      <div class="loader">
+        <svg viewBox="0 0 32 32" id="js-pie-loader" class="loader__pie">
+          <circle r="12" cx="16" cy="16" id="js-pie-loader1" class="loader__pie--color2"></circle>
+          <circle r="12" cx="16" cy="16" id="js-pie-loader2" class="loader__pie--color1"></circle>
+        </svg>
+        <div class="loader__text">loading...</div>
+      </div>
     </section>
     <script src="js/tween.min.js"></script>
     <script src="js/main.js"></script>
