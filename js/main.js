@@ -38,23 +38,24 @@
           it.toggle = !it.toggle;
           it.el = it.toggle ? it.loader1 : it.loader2;
           color = !it.toggle ? it.firstColor : it.secondColor;
-          return setTimeout(function() {
+          return setTimeout((function() {
             return it.toggleStyle.stroke = color;
-          }, 1);
+          }), 1);
         }
       }).repeat(9999999999).start();
     };
 
     Main.prototype.stop = function() {
-      return console.log('implement me');
+      return this.tween.stop();
     };
 
     Main.prototype.destroy = function() {
-      return console.log('implement me');
+      TWEEN.remove(this.tween);
+      return window.pieLoader = null;
     };
 
     Main.prototype.play = function() {
-      return console.log('implement me');
+      return this.tween.play();
     };
 
     Main.prototype.getComutedStyle = function(el) {
@@ -86,6 +87,6 @@
 
   })();
 
-  new Main;
+  window.pieLoader = new Main;
 
 }).call(this);

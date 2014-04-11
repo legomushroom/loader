@@ -27,14 +27,12 @@ class Main
           it.toggle = !it.toggle
           it.el = if (it.toggle) then it.loader1 else it.loader2
           color = if (!it.toggle) then it.firstColor else it.secondColor
-          setTimeout ->
-            it.toggleStyle.stroke = color
-          , 1
+          setTimeout (-> it.toggleStyle.stroke = color), 1
       ).repeat(9999999999).start()
 
-  stop:->     console.log 'implement me'
-  destroy:->  console.log 'implement me'
-  play:->     console.log 'implement me'
+  stop:->     @tween.stop()
+  destroy:->  TWEEN.remove(@tween); window.pieLoader = null
+  play:->     @tween.play()
 
   getComutedStyle:(el)->
     if window.getComputedStyle
@@ -53,5 +51,4 @@ class Main
     bindArgs = Array::slice.call(arguments, 2)
     wrapper
 
-
-new Main
+window.pieLoader = new Main
