@@ -1,0 +1,55 @@
+doctype
+html
+  head
+    meta(charset='UTF-8')
+    title loading pen
+    link(href="favicon.ico", rel="icon", type="image/png")
+    link(rel="stylesheet", type="text/css", href="css/main.css")
+  
+  body
+    script(src="js/tween.min.js")
+    section(role="main")#main
+      svg(viewBox="0 0 32 32").loader-pie#loader
+        circle(r="12", cx="16", cy="16").loader-pie--yellow#js-loader-toggle
+        circle(r="12", cx="16", cy="16").loader-pie--blue#js-loader-blue
+        circle(r="12", cx="16", cy="16").loader-pie--yellow#js-loader-yellow
+
+        script.
+          (function(){
+            (window.StatSocial == null) && (window.StatSocial = {});
+            window.StatSocial.loader = {
+              init: function(){
+                var $loader = $('#loader'),
+                $loaderBlue = $loader.find('#js-loader-blue'),
+                $loaderYellow = $loader.find('#js-loader-yellow'),
+                $loaderToggle = $loader.find('#js-loader-toggle'),
+                blueColor = $loaderBlue.css('stroke'),
+                yellowColor = $loaderYellow.css('stroke'),
+                color = blueColor,
+                toggle = false,
+                $el = (toggle) ? $loaderBlue : $loaderYellow;
+                this.tween = new TWEEN.Tween({ offset: 0, p: 0 })
+                                .to({ offset: 24, p: 1 }, 2000)
+                                .onUpdate(function(){
+                                  $el.css({ 'stroke-dashoffset': this.offset*Math.PI + 'px' });
+                                  if (this.p === 1){
+                                    toggle = !toggle;
+                                    $el = (toggle) ? $loaderBlue : $loaderYellow;
+                                    color = (!toggle) ? blueColor : yellowColor;
+                                    $loaderToggle.css({ stroke: color });
+                                  }
+                                }).repeat(99999999).start();
+              }, destroy:function(){
+                TWEEN.remove(this.tween);
+              }
+            }
+            window.StatSocial.loader.init();
+          })();
+
+    //- script(src="js/main.js")
+
+
+
+
+
+

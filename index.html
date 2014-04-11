@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>loading pen</title>
+    <link href="favicon.ico" rel="icon" type="image/png">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+  </head>
+  <body>
+    <script src="js/tween.min.js"></script>
+    <section role="main" id="main">
+      <svg viewBox="0 0 32 32" id="loader" class="loader-pie">
+        <circle r="12" cx="16" cy="16" id="js-loader-toggle" class="loader-pie--yellow"></circle>
+        <circle r="12" cx="16" cy="16" id="js-loader-blue" class="loader-pie--blue"></circle>
+        <circle r="12" cx="16" cy="16" id="js-loader-yellow" class="loader-pie--yellow"></circle>
+        <script>
+          (function(){
+            (window.StatSocial == null) && (window.StatSocial = {});
+            window.StatSocial.loader = {
+              init: function(){
+                var $loader = $('#loader'),
+                $loaderBlue = $loader.find('#js-loader-blue'),
+                $loaderYellow = $loader.find('#js-loader-yellow'),
+                $loaderToggle = $loader.find('#js-loader-toggle'),
+                blueColor = $loaderBlue.css('stroke'),
+                yellowColor = $loaderYellow.css('stroke'),
+                color = blueColor,
+                toggle = false,
+                $el = (toggle) ? $loaderBlue : $loaderYellow;
+                this.tween = new TWEEN.Tween({ offset: 0, p: 0 })
+                                .to({ offset: 24, p: 1 }, 2000)
+                                .onUpdate(function(){
+                                  $el.css({ 'stroke-dashoffset': this.offset*Math.PI + 'px' });
+                                  if (this.p === 1){
+                                    toggle = !toggle;
+                                    $el = (toggle) ? $loaderBlue : $loaderYellow;
+                                    color = (!toggle) ? blueColor : yellowColor;
+                                    $loaderToggle.css({ stroke: color });
+                                  }
+                                }).repeat(99999999).start();
+              }, destroy:function(){
+                TWEEN.remove(this.tween);
+              }
+            }
+            window.StatSocial.loader.init();
+          })();
+          
+        </script>
+      </svg>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+// BLOCKS
+@import '../assets/imports.styl'
+
+.loader-pie
+  rect 70*PX
+  PI = 3.141598
+  transform rotate(-90deg)
+
+  &--blue, &--yellow
+    fill none
+    stroke-dasharray 24*PI*PX
+    stroke-width 5*PX
+  &--blue
+    stroke #3EBBEE
+  &--yellow
+    stroke #F9C77F
