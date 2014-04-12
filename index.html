@@ -5,17 +5,16 @@
     <title>loading pen</title>
     <link href="favicon.ico" rel="icon" type="image/png">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" type="text/css">
   </head>
   <body>
-    <section role="main" id="main">
-      <div class="loader">
-        <svg viewBox="0 0 32 32" id="js-pie-loader" class="loader__pie">
-          <circle r="12" cx="16" cy="16" id="js-pie-loader1" class="loader__pie--color2"></circle>
-          <circle r="12" cx="16" cy="16" id="js-pie-loader2" class="loader__pie--color1"></circle>
-        </svg>
-        <div class="loader__text">loading...</div>
-      </div>
-    </section>
+    <div id="js-pie-loader" class="loader">
+      <svg viewBox="0 0 32 32" class="loader__pie">
+        <circle r="12" cx="16" cy="16" id="js-pie-loader1" class="loader__pie--color2"></circle>
+        <circle r="12" cx="16" cy="16" id="js-pie-loader2" class="loader__pie--color1"></circle>
+      </svg>
+      <div id="js-pie-loader-text" class="loader__text">loading...</div>
+    </div>
     <script src="js/tween.min.js"></script>
     <script src="js/main.js"></script>
   </body>

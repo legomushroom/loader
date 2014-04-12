@@ -5,14 +5,14 @@ html
     title loading pen
     link(href="favicon.ico", rel="icon", type="image/png")
     link(rel="stylesheet", type="text/css", href="css/main.css")
+    link(href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700', rel='stylesheet', type='text/css')
   
   body
-    section(role="main")#main
-      .loader
-        svg(viewBox="0 0 32 32").loader__pie#js-pie-loader
-          circle(r="12", cx="16", cy="16").loader__pie--color2#js-pie-loader1
-          circle(r="12", cx="16", cy="16").loader__pie--color1#js-pie-loader2
-        .loader__text loading...
+    .loader#js-pie-loader
+      svg(viewBox="0 0 32 32").loader__pie
+        circle(r="12", cx="16", cy="16").loader__pie--color2#js-pie-loader1
+        circle(r="12", cx="16", cy="16").loader__pie--color1#js-pie-loader2
+      .loader__text#js-pie-loader-text loading...
 
 
     //- script(src="http://code.jquery.com/jquery-2.1.0.min.js")

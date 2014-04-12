@@ -9,15 +9,44 @@
     }
 
     Main.prototype.vars = function() {
-      this.loader = document.getElementById('js-pie-loader');
-      this.loader1 = this.loader.getElementById('js-pie-loader1');
-      this.loader2 = this.loader.getElementById('js-pie-loader2');
-      this.loaderToggle = this.loader.getElementById('js-pie-loader-toggle');
+      var i, part;
+      this.loader = document.querySelector('#js-pie-loader');
+      this.loader1 = this.loader.querySelector('#js-pie-loader1');
+      this.loader2 = this.loader.querySelector('#js-pie-loader2');
+      this.loaderToggle = this.loader.querySelector('#js-pie-loader-toggle');
+      this.loaderText = this.loader.querySelector('#js-pie-loader-text');
       this.firstColor = this.getComutedStyle(this.loader1).stroke;
       this.secondColor = this.getComutedStyle(this.loader2).stroke;
+      this.color1 = [];
+      this.color1 = (function() {
+        var _i, _len, _ref, _results;
+        _ref = this.firstColor.split(',');
+        _results = [];
+        for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+          part = _ref[i];
+          if (i === 0) {
+            part = part.replace('rgb(', '');
+          }
+          _results.push(parseInt(part, 10));
+        }
+        return _results;
+      }).call(this);
+      this.color2 = (function() {
+        var _i, _len, _ref, _results;
+        _ref = this.secondColor.split(',');
+        _results = [];
+        for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+          part = _ref[i];
+          if (i === 0) {
+            part = part.replace('rgb(', '');
+          }
+          _results.push(parseInt(part, 10));
+        }
+        return _results;
+      }).call(this);
       this.toggle = false;
       this.el = this.loader2;
-      this.delay = 3000;
+      this.delay = 4000;
       this.animate = this.bind(this.animate, this);
       return this.animate();
     };
@@ -43,35 +72,41 @@
       it = this;
       this.tween2 = new TWEEN.Tween({
         offset: -24,
-        p: 0
+        p: 0,
+        r: this.color1[0],
+        g: this.color1[1],
+        b: this.color1[2]
       }).to({
         offset: 0,
+        r: this.color2[0],
+        g: this.color2[1],
+        b: this.color2[2],
         p: 1
       }, this.o.duration || this.delay).onUpdate(function() {
-        return it.el.style['stroke-dashoffset'] = this.offset * Math.PI;
+        it.el.style['stroke-dashoffset'] = this.offset * Math.PI;
+        return it.loaderText.style['color'] = "rgb(" + (parseInt(this.r, 10)) + "," + (parseInt(this.g, 10)) + "," + (parseInt(this.b, 10)) + ")";
       });
       return this.tween = new TWEEN.Tween({
         offset: 0,
-        p: 0
+        p: 0,
+        r: this.color2[0],
+        g: this.color2[1],
+        b: this.color2[2]
       }).to({
         offset: 24,
-        p: 1
+        p: 1,
+        r: this.color1[0],
+        g: this.color1[1],
+        b: this.color1[2]
       }, this.o.duration || this.delay).onUpdate(function() {
-        return it.el.style['stroke-dashoffset'] = this.offset * Math.PI;
+        it.el.style['stroke-dashoffset'] = this.offset * Math.PI;
+        return it.loaderText.style['color'] = "rgb(" + (parseInt(this.r, 10)) + "," + (parseInt(this.g, 10)) + "," + (parseInt(this.b, 10)) + ")";
       }).chain(this.tween2).start();
     };
 
-    Main.prototype.stop = function() {
-      return this.tween.stop();
-    };
-
     Main.prototype.destroy = function() {
-      TWEEN.remove(this.tween);
+      TWEEN.remove(this.tween, this.tween2, this.mainTween);
       return window.pieLoader = null;
-    };
-
-    Main.prototype.play = function() {
-      return this.tween.play();
     };
 
     Main.prototype.getComutedStyle = function(el) {
@@ -105,6 +140,6 @@
 
   window.pieLoader = Main;
 
-  new window.pieLoader;
+  window.r = new window.pieLoader;
 
 }).call(this);
