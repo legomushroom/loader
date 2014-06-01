@@ -1,3 +1,5 @@
+just yet another svg loader
+
 ---------------------
 
 The MIT License (MIT)
